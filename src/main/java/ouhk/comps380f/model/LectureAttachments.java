@@ -32,7 +32,7 @@ public class LectureAttachments implements Serializable {
     private byte[] contents;
 
     @Column(name = "lecture_id", insertable=false, updatable=false)
-    private long lectureId;
+    private int lectureId;
 
     @ManyToOne
     @JoinColumn(name = "lecture_id")
@@ -70,11 +70,11 @@ public class LectureAttachments implements Serializable {
         this.contents = contents;
     }
 
-    public long getLectureId() {
+    public int getLectureId() {
         return lectureId;
     }
 
-    public void setLectureId(long lectureId) {
+    public void setLectureId(int lectureId) {
         this.lectureId = lectureId;
     }
 

@@ -7,11 +7,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 @Entity
 public class Users implements Serializable {
@@ -25,6 +22,10 @@ public class Users implements Serializable {
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER,
             cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserRole> roles = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PollResponse> response = new ArrayList<>();
 
     public Users() {
     }
@@ -59,5 +60,18 @@ public class Users implements Serializable {
 
     public void setRoles(List<UserRole> roles) {
         this.roles = roles;
+    }
+
+    public List<PollResponse> getResponse() {
+        return response;
+    }
+
+    public void setResponse(List<PollResponse> response) {
+        this.response = response;
+    }
+    
+    public void deleteResponse(PollResponse oneResponse) {
+        oneResponse.setUser(null);
+        this.response.remove(response);
     }
 }

@@ -1,13 +1,28 @@
 package ouhk.comps380f.model;
 
-import java.util.Date;
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-public class PollComment {
+@Entity
+@Table(name = "poll_comments")
+public class PollComment implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String poll;
-    private String user;
-    private Date timpstamp = new Date();
-    private String comment;
+    
+    @Column(name="username")
+    private String username;
+    
+    @Column(name="poll_id")
+    private int pollId;
+    
+    @Column(name="content")
+    private String content;
 
     public int getId() {
         return id;
@@ -17,37 +32,27 @@ public class PollComment {
         this.id = id;
     }
 
-    public String getPoll() {
-        return poll;
+    public String getUsername() {
+        return username;
     }
 
-    public void setPoll(String poll) {
-        this.poll = poll;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getUser() {
-        return user;
+    public int getPollId() {
+        return pollId;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setPollId(int pollId) {
+        this.pollId = pollId;
     }
 
-    public Date getTimpstamp() {
-        return timpstamp;
+    public String getContent() {
+        return content;
     }
 
-    public void setTimpstamp(Date timpstamp) {
-        this.timpstamp = timpstamp;
+    public void setContent(String content) {
+        this.content = content;
     }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-    
-    
 }

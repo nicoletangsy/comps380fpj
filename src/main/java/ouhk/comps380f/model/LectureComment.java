@@ -1,13 +1,33 @@
 package ouhk.comps380f.model;
 
-import java.util.Date;
+import java.io.Serializable;
+import java.util.Hashtable;
+import java.util.Map;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-public class LectureComment {
+@Entity
+@Table(name = "lecture_comments")
+public class LectureComment implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String lecture;
-    private String user;
-    private Date timpstamp = new Date();
-    private String comment;
+    
+    @Column(name="username")
+    private String username;
+    
+    @Column(name="lecture_id")
+    private int lectureId;
+    
+    @Column(name="content")
+    private String content;
 
     public int getId() {
         return id;
@@ -17,37 +37,27 @@ public class LectureComment {
         this.id = id;
     }
 
-    public String getLecture() {
-        return lecture;
+    public String getUsername() {
+        return username;
     }
 
-    public void setLecture(String lecture) {
-        this.lecture = lecture;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getUser() {
-        return user;
+    public int getLectureId() {
+        return lectureId;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setLectureId(int lectureId) {
+        this.lectureId = lectureId;
     }
 
-    public Date getTimpstamp() {
-        return timpstamp;
+    public String getContent() {
+        return content;
     }
 
-    public void setTimpstamp(Date timpstamp) {
-        this.timpstamp = timpstamp;
+    public void setContent(String content) {
+        this.content = content;
     }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-    
-    
 }

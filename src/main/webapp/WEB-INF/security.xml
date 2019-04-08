@@ -77,4 +77,3 @@
         <b:property name="packagesToScan" value="ouhk.comps380f.model"/>
     </b:bean>
 </b:beans>
-s

@@ -2,6 +2,7 @@ package ouhk.comps380f.controller;
 
 import java.io.IOException;
 import javax.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,12 +18,12 @@ import ouhk.comps380f.model.Users;
 @RequestMapping("user")
 public class UserController {
 
-    @Resource
-    UsersRepository UsersRepo;
+    @Autowired
+    UsersRepository usersRepo;
 
     @RequestMapping(value = {"", "list"}, method = RequestMethod.GET)
     public String list(ModelMap model) {
-        model.addAttribute("Users", UsersRepo.findAll());
+        model.addAttribute("Users", usersRepo.findAll());
         return "listUser";
     }
 
@@ -67,13 +68,13 @@ public class UserController {
         Users user = new Users(form.getUsername(),
                 form.getPassword(), form.getRoles()
         );
-        UsersRepo.save(user);
+        usersRepo.save(user);
         return new RedirectView("/user/list", true);
     }
 
     @RequestMapping(value = "delete/{username}", method = RequestMethod.GET)
     public View deleteTicket(@PathVariable("username") String username) {
-        UsersRepo.delete(UsersRepo.findOne(username));
+        usersRepo.delete(usersRepo.findOne(username));
         return new RedirectView("/user/list", true);
     }
 }

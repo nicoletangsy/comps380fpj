@@ -19,7 +19,7 @@ import ouhk.comps380f.view.DownloadingView;
 
 @Controller
 @RequestMapping("course")
-public class courseController {
+public class CourseController {
 
     private volatile long TICKET_ID_SEQUENCE = 1;
     private Map<Long, course> courseDatabase = new Hashtable<>();

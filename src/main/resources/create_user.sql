@@ -21,7 +21,7 @@ INSERT INTO user_roles(username, role) VALUES ('tsli', 'ROLE_ADMIN');
 INSERT INTO user_roles(username, role) VALUES ('tsli', 'ROLE_USER');
 
 INSERT INTO users VALUES ('user1', 'user1pw');
-INSERT INTO user_roles(username, role) VALUES ('kevin', 'ROLE_USER');
+INSERT INTO user_roles(username, role) VALUES ('user1', 'ROLE_USER');
 
 INSERT INTO users VALUES ('user2', 'user2pw');
-INSERT INTO user_roles(username, role) VALUES ('oliver', 'ROLE_USER');
+INSERT INTO user_roles(username, role) VALUES ('user2', 'ROLE_USER');

@@ -1,17 +1,14 @@
 CREATE TABLE polls (
     id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
     question VARCHAR(255) NOT NULL,
-    course_id INTEGER DEFAULT NULL,
-    PRIMARY KEY (id), 
-    FOREIGN KEY (course_id) REFERENCES courses(id) 
-)
+    PRIMARY KEY (id)
+);
 
 CREATE TABLE poll_responses (
     id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
     question_id INTEGER DEFAULT NULL,
     username VARCHAR(50) NOT NULL,
-    response INTEGER(1) NOT NULL,
-    PRIMARY KEY (id), 
-    FOREIGN KEY (poll_id) REFERENCES polls(id), 
-    FOREIGN KEY (username) REFERENCES users(username)
-)
+    response CHAR(1) NOT NULL,
+    poll_id INTEGER DEFAULT NULL,
+    PRIMARY KEY (id)
+);

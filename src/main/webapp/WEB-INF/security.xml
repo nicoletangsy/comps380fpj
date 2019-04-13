@@ -5,7 +5,6 @@
          xmlns:context="http://www.springframework.org/schema/context"
          xmlns:tx="http://www.springframework.org/schema/tx"
          xmlns:jpa="http://www.springframework.org/schema/data/jpa"
-
          xsi:schemaLocation="
             http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
@@ -26,11 +25,13 @@
         <b:property name="username" value="nbuser" />
         <b:property name="password" value="nbuser" />
     </b:bean>    
-
+    
     <http auto-config="true">
-        <intercept-url pattern="/course/delete/**" access="hasRole('ADMIN')" />
-        <intercept-url pattern="/course/**" access="hasAnyRole('USER','ADMIN')" />
-        <form-login login-page="/login" authentication-failure-url="/login?error" />
+        <intercept-url pattern="/lecture/**" access="hasRole('ADMIN') or hasRole('USER')" />
+        <intercept-url pattern="/poll/**" access="hasRole('ADMIN') or hasRole('USER')" />
+        <intercept-url pattern="/user/**" access="hasRole('ADMIN')"/>
+        <intercept-url pattern="/user/list" access="hasRole('ADMIN')"/>
+        <form-login login-page="/login" default-target-url="/course/list" authentication-failure-url="/login?error" />
         <logout logout-success-url="/login?logout"
                 invalidate-session="true"
                 delete-cookies="JSESSIONID" />

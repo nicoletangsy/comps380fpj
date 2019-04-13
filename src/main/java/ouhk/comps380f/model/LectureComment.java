@@ -1,8 +1,8 @@
 package ouhk.comps380f.model;
 
 import java.io.Serializable;
-import java.util.Hashtable;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,24 +10,39 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "lecture_comments")
-public class LectureComment implements Serializable {
+@Table(name="lecture_comments")
+public class LectureComment {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     
-    @Column(name="username")
-    private String username;
+    @Column(insertable = false, updatable = false)
+    private String lecture_id;
     
-    @Column(name="lecture_id")
-    private int lectureId;
+    @ManyToOne
+    @JoinColumn(name = "lecture_id")
+    private Lecture lecture;
+    
+    @Column(name="username")
+    private String user;
     
     @Column(name="content")
-    private String content;
+    private String comment;
+    
+    public LectureComment(){
+    }
+    
+    public LectureComment(Lecture lecture, String user, String comment){
+        this.lecture = lecture;
+        this.user = user;
+        this.comment = comment;
+    }
 
     public int getId() {
         return id;
@@ -37,27 +52,36 @@ public class LectureComment implements Serializable {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public Lecture getLecture() {
+        return lecture;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setLecture(Lecture lecture) {
+        this.lecture = lecture;
     }
 
-    public int getLectureId() {
-        return lectureId;
+    public String getUser() {
+        return user;
     }
 
-    public void setLectureId(int lectureId) {
-        this.lectureId = lectureId;
+    public void setUser(String user) {
+        this.user = user;
     }
 
-    public String getContent() {
-        return content;
+    public String getComment() {
+        return comment;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
+    
+    public void setLectureId(String id){
+        this.lecture_id = id;
+    }
+    
+    public String getLectureId(){
+        return lecture_id;
+    }
+    
 }

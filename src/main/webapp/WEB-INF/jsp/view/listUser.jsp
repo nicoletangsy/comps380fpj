@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+    <head><title>All Users</title></head>
     <body>
         <c:url var="logoutUrl" value="/logout"/>
         <form action="${logoutUrl}" method="post">
@@ -7,7 +8,7 @@
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
         <br /><br />
-        <a href="<c:url value="/course" />">Return to list courses</a>
+        <a href="<c:url value="/user/create" />">Create user</a><br>
         <h2>Users</h2>
         <c:choose>
             <c:when test="${fn:length(Users) == 0}">
@@ -28,12 +29,17 @@
                                 </c:forEach>
                             </td>
                             <td>
+                                [<a href="<c:url value="/user/edit/${user.username}" />">Edit</a>]
+                            </td>         
+                            <td>
                                 [<a href="<c:url value="/user/delete/${user.username}" />">Delete</a>]
-                            </td>
+                            </td>                   
                         </tr>
                     </c:forEach>
                 </table>
             </c:otherwise>
         </c:choose>
+        <br/>
+        <a href="<c:url value="/course" />">Return to Home Page</a>
     </body>
 </html>

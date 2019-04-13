@@ -9,27 +9,24 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "users")
 public class Users implements Serializable {
 
     @Id
     private String username;
-    
-    @Column(insertable = false, updatable = false)
+   
     private String password;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER,
             cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserRole> roles = new ArrayList<>();
-    
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PollResponse> response = new ArrayList<>();
 
     public Users() {
     }
-
+    
     public Users(String username, String password, String[] roles) {
         this.username = username;
         this.password = password;
@@ -60,18 +57,5 @@ public class Users implements Serializable {
 
     public void setRoles(List<UserRole> roles) {
         this.roles = roles;
-    }
-
-    public List<PollResponse> getResponse() {
-        return response;
-    }
-
-    public void setResponse(List<PollResponse> response) {
-        this.response = response;
-    }
-    
-    public void deleteResponse(PollResponse oneResponse) {
-        oneResponse.setUser(null);
-        this.response.remove(response);
     }
 }

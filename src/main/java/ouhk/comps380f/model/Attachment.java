@@ -1,7 +1,10 @@
 package ouhk.comps380f.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,14 +14,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "lecture_notes_attachments")
-public class LectureAttachments implements Serializable {
+public class Attachment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
 
     @Column(name = "filename")
     private String name;
@@ -31,19 +36,35 @@ public class LectureAttachments implements Serializable {
     @Lob
     private byte[] contents;
 
-    @Column(name = "lecture_id", insertable=false, updatable=false)
-    private int lectureId;
-
     @ManyToOne
     @JoinColumn(name = "lecture_id")
-    private Lectures lecture;
+    private Lecture lecture;
 
-    public long getId() {
+    public Attachment(){
+        
+    }
+    
+    public Attachment(String name, String contentType,byte[] contents, Lecture lecture){
+        this.name = name;
+        this.mimeContentType = contentType;
+        this.contents = contents;
+        this.lecture = lecture;
+    }
+    
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
+    }
+
+    public Lecture getLecture() {
+        return lecture;
+    }
+
+    public void setLecture(Lecture lecture) {
+        this.lecture = lecture;
     }
 
     public String getName() {
@@ -68,21 +89,5 @@ public class LectureAttachments implements Serializable {
 
     public void setContents(byte[] contents) {
         this.contents = contents;
-    }
-
-    public int getLectureId() {
-        return lectureId;
-    }
-
-    public void setLectureId(int lectureId) {
-        this.lectureId = lectureId;
-    }
-
-    public Lectures getLecture() {
-        return lecture;
-    }
-
-    public void setLecture(Lectures lecture) {
-        this.lecture = lecture;
     }
 }

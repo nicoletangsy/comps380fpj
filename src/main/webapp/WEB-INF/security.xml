@@ -29,8 +29,11 @@
     <http auto-config="true">
         <intercept-url pattern="/lecture/**" access="hasRole('ADMIN') or hasRole('USER')" />
         <intercept-url pattern="/poll/**" access="hasRole('ADMIN') or hasRole('USER')" />
-        <intercept-url pattern="/user/**" access="hasRole('ADMIN')"/>
+        <intercept-url pattern="/user" access="hasRole('ADMIN')"/>
+        <intercept-url pattern="/user/edit/**" access="hasRole('ADMIN')"/>
+        <intercept-url pattern="/user/delete/**" access="hasRole('ADMIN')"/>
         <intercept-url pattern="/user/list" access="hasRole('ADMIN')"/>
+        <intercept-url pattern="/poll/create" access="hasRole('ADMIN')"/>
         <form-login login-page="/login" default-target-url="/course/list" authentication-failure-url="/login?error" />
         <logout logout-success-url="/login?logout"
                 invalidate-session="true"

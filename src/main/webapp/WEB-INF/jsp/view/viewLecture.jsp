@@ -17,8 +17,9 @@
                 <c:forEach items="${Attachments}" var="att">
                     <a href="<c:url value="/lecture/Attachment/download/${att.id}" />">${att.name}</a>
                     <security:authorize access="hasRole('ADMIN')">
-                        [<a href="<c:url value="/lecture/Attachment/delete/${lecture.id}/${att.id}" />">Delete</a>]<br>
+                        [<a href="<c:url value="/lecture/Attachment/delete/${lecture.id}/${att.id}" />">Delete</a>]
                     </security:authorize>
+                        <br/>
                 </c:forEach>
             </c:otherwise>
         </c:choose>

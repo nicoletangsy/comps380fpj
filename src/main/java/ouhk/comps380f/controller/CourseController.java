@@ -35,10 +35,4 @@ public class CourseController {
         model.addAttribute("poll", pollRepo.findAll());
         return "list";
     }
-
-    @RequestMapping(value = "view/{courseId}", method = RequestMethod.GET)
-    public String view(@PathVariable("courseId") long courseId,
-            ModelMap model) {
-        return "view";
-    }
 }

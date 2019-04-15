@@ -19,12 +19,17 @@ import java.security.Principal;
 import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 import ouhk.comps380f.dao.AttachmentRepository;
+import ouhk.comps380f.dao.TutorialRepository;
 import ouhk.comps380f.model.Attachment;
+import ouhk.comps380f.model.TutorialAttachment;
 import ouhk.comps380f.view.DownloadingView;
 
 @Controller
 @RequestMapping("lecture")
 public class lectureController {
+    
+    @Autowired
+    TutorialRepository tutoRepo;
 
     @Autowired
     lectureRepository lectureRepo;
@@ -75,6 +80,7 @@ public class lectureController {
         MAV.addObject("user", principal.getName());
         MAV.addObject("commentForm", new CommentForm());
         MAV.addObject("Attachments", attRepo.readAttachmentByLectureOrderById(lectureRepo.findOne(Integer.parseInt(lecture))));
+        MAV.addObject("Tutorials", tutoRepo.readTutorialAttachmentByLectureOrderById(lectureRepo.findOne(Integer.parseInt(lecture))));
         return MAV;
     }
 
@@ -145,18 +151,11 @@ public class lectureController {
         return new RedirectView("/lecture/view/" + lecture, true);
     }
 
-    @RequestMapping(value = "Attachment/delete/{lecture}/{attachment}", method = RequestMethod.GET)
-    public View deleteAttachment(@PathVariable("lecture") String lecture, @PathVariable("attachment") String attachment) {
-        Attachment i = attRepo.findOne(Integer.parseInt(attachment));
-        i.setLecture(null);
-        attRepo.save(i);
-        attRepo.delete(Integer.parseInt(attachment));
-        return new RedirectView("/lecture/view/" + lecture, true);
-    }
-
     public static class attForm {
 
         private List<MultipartFile> files;
+        
+        private List<MultipartFile> files2;
 
         public List<MultipartFile> getFiles() {
             return files;
@@ -164,6 +163,14 @@ public class lectureController {
 
         public void setFiles(List<MultipartFile> files) {
             this.files = files;
+        }
+
+        public List<MultipartFile> getFiles2() {
+            return files2;
+        }
+
+        public void setFiles2(List<MultipartFile> files) {
+            this.files2 = files;
         }
     }
 
@@ -185,6 +192,12 @@ public class lectureController {
                 attRepo.save(att);
             }
         }
+        if (form.getFiles2() != null && form.getFiles2().size() > 0) {
+            for (MultipartFile file : form.getFiles2()) {
+                TutorialAttachment att = new TutorialAttachment(file.getOriginalFilename(), file.getContentType(), file.getBytes(), i);
+                tutoRepo.save(att);
+            }
+        }
         return new RedirectView("/lecture/view/" + i.getId(), true);
     }
 
@@ -195,5 +208,33 @@ public class lectureController {
             return new DownloadingView(i.getName(), i.getMimeContentType(), i.getContents());
         }
         return new RedirectView("/", true);
+    }
+    
+
+    @RequestMapping(value = "Tutorial/download/{attachment}", method = RequestMethod.GET)
+    public View downloadTutoAttachment(@PathVariable("attachment") String att) {
+        TutorialAttachment i = tutoRepo.findOne(Integer.parseInt(att));
+        if (i != null) {
+            return new DownloadingView(i.getName(), i.getMimeContentType(), i.getContents());
+        }
+        return new RedirectView("/", true);
+    }    
+    
+    @RequestMapping(value = "Attachment/delete/{lecture}/{attachment}", method = RequestMethod.GET)
+    public View deleteAttachment(@PathVariable("lecture") String lecture, @PathVariable("attachment") String attachment) {
+        Attachment i = attRepo.findOne(Integer.parseInt(attachment));
+        i.setLecture(null);
+        attRepo.save(i);
+        attRepo.delete(Integer.parseInt(attachment));
+        return new RedirectView("/lecture/view/" + lecture, true);
+    }
+
+    @RequestMapping(value = "Tutorial/delete/{lecture}/{attachment}", method = RequestMethod.GET)
+    public View deleteTutoAttachment(@PathVariable("lecture") String lecture, @PathVariable("attachment") String attachment) {
+        TutorialAttachment i = tutoRepo.findOne(Integer.parseInt(attachment));
+        i.setLecture(null);
+        tutoRepo.save(i);
+        tutoRepo.delete(Integer.parseInt(attachment));
+        return new RedirectView("/lecture/view/" + lecture, true);
     }
 }

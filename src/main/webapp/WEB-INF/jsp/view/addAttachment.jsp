@@ -14,8 +14,11 @@
         <form:form method="POST" enctype="multipart/form-data"
                    modelAttribute="lecture">
             Title: ${lecture.title}<br/><br/>
-            <b>Attachment(s): </b><br>
+            <b>Lecture Notes Attachment(s): </b><br>
             <input type="file" name="files" multiple="multiple"/><br/>
+            <br/>
+            <b>Tutorial Notes Attachment(s): </b><br>
+            <input type="file" name="files2" multiple="multiple"/><br/>
             <br/>
             <input type="submit" value="Create"/>
         </form:form><br/>

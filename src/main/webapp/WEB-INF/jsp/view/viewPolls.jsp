@@ -40,7 +40,7 @@
             </c:when> 
             <c:otherwise>
                 <c:forEach items="${comments}" var="com">
-                    <b>${com.user}</b>: ${com.comment}
+                    <b>${com.user}</b>: <c:out value="${com.comment}"/>
                     <security:authorize access="hasRole('ADMIN')">
                         [<a href="<c:url value="/poll/comment/delete/${Poll.id}/${com.id}" />">Delete</a>]
                     </security:authorize>

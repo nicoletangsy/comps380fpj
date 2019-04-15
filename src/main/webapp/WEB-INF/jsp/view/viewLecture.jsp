@@ -8,10 +8,13 @@
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
         <h1>${lecture.title}</h1>
-        <h2>Materials:</h2>
+        <security:authorize access="hasRole('ADMIN')">
+            [<a href="<c:url value="/lecture/Attachment/add/${lecture.id}" />">Add attachment(s)</a>]<br>
+        </security:authorize>
+        <h2>Lecture Notes:</h2>
         <c:choose>
             <c:when test="${fn:length(Attachments)==0}">
-                There are no materials.<br><br>
+                There are no lecture notes.<br><br>
             </c:when> 
             <c:otherwise>
                 <c:forEach items="${Attachments}" var="att">
@@ -23,9 +26,22 @@
                 </c:forEach>
             </c:otherwise>
         </c:choose>
-        <security:authorize access="hasRole('ADMIN')">
-            [<a href="<c:url value="/lecture/Attachment/add/${lecture.id}" />">Add attachment(s)</a>]<br>
-        </security:authorize>
+        <h2>Tutorial Notes:</h2>
+        <c:choose>
+            <c:when test="${fn:length(Tutorials)==0}">
+                There are no tutorial.<br><br>
+            </c:when> 
+            <c:otherwise>
+                <c:forEach items="${Tutorials}" var="att">
+                    <a href="<c:url value="/lecture/Tutorial/download/${att.id}" />">${att.name}</a>
+                    <security:authorize access="hasRole('ADMIN')">
+                        [<a href="<c:url value="/lecture/Tutorial/delete/${lecture.id}/${att.id}" />">Delete</a>]
+                    </security:authorize>
+                        <br/>
+                </c:forEach>
+            </c:otherwise>
+        </c:choose>
+        
             <h2>Comments: </h2>
         <c:choose>
             <c:when test="${fn:length(comments)==0}">
@@ -33,7 +49,7 @@
             </c:when> 
             <c:otherwise>
                 <c:forEach items="${comments}" var="com">
-                    <b>${com.user}</b>: ${com.comment}
+                    <b>${com.user}</b>: <c:out value="${com.comment}"/>
                     <security:authorize access="hasRole('ADMIN')">
                         [<a href="<c:url value="/lecture/comment/delete/${lecture.id}/${com.id}" />">Delete</a>]
                     </security:authorize><br>
